@@ -1,12 +1,1 @@
 exportPattern("^[[:alpha:]]+")
-#' @import  mgcv
-
-    import(fda,
-    refund,
-    mgcv,
-    funData,
-    MFPCA,
-    dbscan,
-    fossil,
-    NbClust,
-    ggplot2)
