@@ -1,4 +1,5 @@
 exportPattern("^[[:alpha:]]+")
+#' @import  mgcv
 
     import(fda,
     refund,
