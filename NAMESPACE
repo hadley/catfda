@@ -1,11 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-Depends:
-    fda,
-    refund,
-    mgcv,
-    funData,
-    MFPCA,
-    dbscan,
-    fossil,
-    NbClust,
-    ggplot2
+
