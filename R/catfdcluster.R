@@ -408,8 +408,20 @@ catsim=function(seed=123,datapoints,n,sparse1,sparse2,scorevar1,scorevar2,ps,st,
 
 
 ##function to visualize the clustering results
-plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints){
+plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints,knnum,pct){
   #DSCAN
+  dist=dbscan::kNNdist(scores_z, k = knnum)
+  distdata=data.frame(sort(dist))
+  distdata$index=1:dim(distdata)[1]
+  ninty5p=quantile(dist, probs = pct)
+  dp <- ggplot2::ggplot(distdata,aes(index,sort.dist.)) + geom_line()+ggtitle(paste0(knnum,"-NN Distance Plot ",'\n',"(",dim(distdata)[1]," Subjects",")")) +
+    xlab("Points sorted by Distance") + ylab("Distance")+ theme(plot.title = element_text(hjust = 0.5))+geom_hline(yintercept=ninty5p, color = "red")+
+    geom_text(data=data.frame(round(ninty5p,2)),
+              aes(x=dim(distdata)[1]/2,y=1.2*ninty5p,label=paste0("Distance at ",gsub("%$","",row.names(data.frame(round(ninty5p,2)))),"th percentile= ",round(ninty5p,2))))
+
+  
+  
+  
   clusterdata=data.frame(scores_z)
   clusterdata$Cluster=as.factor(dbcluster)
   #clusterdata$Cluster=as.factor(res$cluster)
@@ -427,7 +439,7 @@ plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints){
     xlab(expression('Score '* widehat(xi[i1]))) + ylab(expression('Score '* widehat(xi[i2])))+ theme(plot.title = element_text(hjust = 0.5))+
     theme(text=element_text(size = 20))
 
-  return(list("figdbscan"=tps,"figkmeans"=tpskmeans))
+  return(list("distfig"=dp,"figdbscan"=tps,"figkmeans"=tpskmeans))
 }
 
 
@@ -559,15 +571,7 @@ catcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
   uFPCA <- MFPCA::MFPCA(mvdata, M = M, uniExpansions = uniexpan)
   scores_z=uFPCA$scores
 
-  dist=dbscan::kNNdist(scores_z, k = knnum)
-  distdata=data.frame(sort(dist))
-  distdata$index=1:dim(distdata)[1]
-  ninty5p=quantile(dist, probs = pct)
-  dp <- ggplot2::ggplot(distdata,aes(index,sort.dist.)) + geom_line()+ggtitle(paste0(knnum,"-NN Distance Plot ",'\n',"(",dim(distdata)[1]," Subjects",")")) +
-    xlab("Points sorted by Distance") + ylab("Distance")+ theme(plot.title = element_text(hjust = 0.5))+geom_hline(yintercept=ninty5p, color = "red")+
-    geom_text(data=data.frame(round(ninty5p,2)),
-              aes(x=dim(distdata)[1]/2,y=1.2*ninty5p,label=paste0("Distance at ",gsub("%$","",row.names(data.frame(round(ninty5p,2)))),"th percentile= ",round(ninty5p,2))))
-
+ 
   #7, 0.98 2 clusters  6, 88
   res <- dbscan::dbscan(scores_z, eps =pct , minPts = minPts )
 
@@ -580,7 +584,7 @@ catcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
                     min.nc = min.nc, max.nc = max.nc, method = "kmeans")
   clustertablek=table(reskmeans$Best.partition)
 
-  return(list("scores"=scores_z,"distfig"=dp,"dbcluster"=res$cluster,"dbtable"=clustertable,
+  return(list("scores"=scores_z,"dbcluster"=res$cluster,"dbtable"=clustertable,
               "kcluster"=reskmeans$Best.partition,"kmeantable"=clustertablek,
               "latentcurve"=Zihatstar,"meanfn"=uFPCA$meanFunction,"eigenvalue"=uFPCA$values,
               "eigenfn"=uFPCA$functions,"probcurve"=phatmat))
