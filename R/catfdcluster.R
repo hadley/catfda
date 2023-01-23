@@ -25,7 +25,7 @@ logit <- function(x){
 #get smoothed curves
 regression_g = function(z, Curves, tt, k=25, method="ML"){   #changed from 10 to 25
   z1 = Curves[z,]
-  gam1 <- gam(z1~s(tt, bs = "cr", m=2, k = k),
+  gam1 <- mgcv::gam(z1~s(tt, bs = "cr", m=2, k = k),
               family="binomial", method = method,control=list(maxit = 500,mgcv.tol=1e-4,epsilon = 1e-04),optimizer=c("outer","bfgs"))
   return(gam1$fitted.values)
 }
@@ -415,7 +415,7 @@ plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints){
   #clusterdata$Cluster=as.factor(res$cluster)
   colnames(clusterdata)[1:2] =c("ksi1","ksi2")
 
-  tps <- ggplot(clusterdata,aes(ksi1,ksi2,colour = Cluster)) + geom_point(aes(shape=Cluster),size=3)+ggtitle(paste0("DBSCAN Cluster Results",'\n',"(",dim(clusterdata)[1]," Subjects",")")) +
+  tps <- ggplot2::ggplot(clusterdata,aes(ksi1,ksi2,colour = Cluster)) + geom_point(aes(shape=Cluster),size=3)+ggtitle(paste0("DBSCAN Cluster Results",'\n',"(",dim(clusterdata)[1]," Subjects",")")) +
     xlab(expression('Score '* widehat(xi[i1]))) + ylab(expression('Score '* widehat(xi[i2])))+ theme(plot.title = element_text(hjust = 0.5))+
     theme(text=element_text(size = 20))
   ###kmeans
@@ -423,7 +423,7 @@ plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints){
   clusterdatak=data.frame(scores_z)
   clusterdatak$Cluster=as.factor(kcluster)
   colnames(clusterdatak)[1:2] =c("ksi1","ksi2")
-  tpskmeans <- ggplot(clusterdatak,aes(ksi1,ksi2,colour = Cluster)) + geom_point(aes(shape=Cluster),size=3)+ggtitle(paste0("Kmeans Cluster Results",'\n',"(",dim(clusterdatak)[1]," Subjects",")")) +
+  tpskmeans <- ggplot2::ggplot(clusterdatak,aes(ksi1,ksi2,colour = Cluster)) + geom_point(aes(shape=Cluster),size=3)+ggtitle(paste0("Kmeans Cluster Results",'\n',"(",dim(clusterdatak)[1]," Subjects",")")) +
     xlab(expression('Score '* widehat(xi[i1]))) + ylab(expression('Score '* widehat(xi[i2])))+ theme(plot.title = element_text(hjust = 0.5))+
     theme(text=element_text(size = 20))
 
@@ -506,8 +506,8 @@ plot_latent=function(zlatent,phat,st,et,cluster,labelnum,argval){
 randfn=function(dbcluster,kcluster,nsub){
   tlabel=c(rep(1,nsub*0.7),rep(2,nsub*0.3),rep(3,nsub*0.04))
 
-  randdbscan=rand.index(tlabel,dbcluster)
-  randkmeans=rand.index(tlabel,kcluster)
+  randdbscan=fossil::rand.index(tlabel,dbcluster)
+  randkmeans=fossil::rand.index(tlabel,kcluster)
   return(list("randd"=randdbscan,"randk"=randkmeans))
 }
 
@@ -547,7 +547,7 @@ catcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
 
   vecapply=matrix(1:(dim(Zihatstar)[3]),ncol=1)
   mfdataused=apply(vecapply,1,function(x) {mfundata(Zihatstar[,,x],t)})
-  mvdata=multiFunData(mfdataused)
+  mvdata=MFPCA::multiFunData(mfdataused)
 
   uniexpan=list()
   # MFPCA based on univariate FPCA Z_ihat
@@ -556,27 +556,27 @@ catcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
   }
 
   # MFPCA based on univariate FPCA Z_ihat
-  uFPCA <- MFPCA(mvdata, M = M, uniExpansions = uniexpan)
+  uFPCA <- MFPCA::MFPCA(mvdata, M = M, uniExpansions = uniexpan)
   scores_z=uFPCA$scores
 
-  dist=kNNdist(scores_z, k = knnum)
+  dist=dbscan::kNNdist(scores_z, k = knnum)
   distdata=data.frame(sort(dist))
   distdata$index=1:dim(distdata)[1]
   ninty5p=quantile(dist, probs = pct)
-  dp <- ggplot(distdata,aes(index,sort.dist.)) + geom_line()+ggtitle(paste0(knnum,"-NN Distance Plot ",'\n',"(",dim(distdata)[1]," Subjects",")")) +
+  dp <- ggplot2::ggplot(distdata,aes(index,sort.dist.)) + geom_line()+ggtitle(paste0(knnum,"-NN Distance Plot ",'\n',"(",dim(distdata)[1]," Subjects",")")) +
     xlab("Points sorted by Distance") + ylab("Distance")+ theme(plot.title = element_text(hjust = 0.5))+geom_hline(yintercept=ninty5p, color = "red")+
     geom_text(data=data.frame(round(ninty5p,2)),
               aes(x=dim(distdata)[1]/2,y=1.2*ninty5p,label=paste0("Distance at ",gsub("%$","",row.names(data.frame(round(ninty5p,2)))),"th percentile= ",round(ninty5p,2))))
 
   #7, 0.98 2 clusters  6, 88
-  res <- dbscan(scores_z, eps =pct , minPts = minPts )
+  res <- dbscan::dbscan(scores_z, eps =pct , minPts = minPts )
 
   clustertable=table(res$cluster)
   #tclustertable    #z score
 
 
   #########Kmeans
-  reskmeans=NbClust(data = scores_z, diss = NULL, distance = "euclidean",
+  reskmeans=NbClust::NbClust(data = scores_z, diss = NULL, distance = "euclidean",
                     min.nc = min.nc, max.nc = max.nc, method = "kmeans")
   clustertablek=table(reskmeans$Best.partition)
 
