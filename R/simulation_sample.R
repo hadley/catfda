@@ -27,7 +27,7 @@
 #et=Sys.time()
 #telapse=et-st
 #telapse
-#testcluster$distfig
+#not needed anymore ####testcluster$distfig
 #####################################################################################
 
 #randfn=function(dbcluster,kcluster,nsub)
