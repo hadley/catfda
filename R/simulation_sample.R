@@ -15,7 +15,9 @@
 #block 1
 #dpoints=1000
 #nsub=100
-#testcatdata=catsim(seed=123,dpoints,nsub,4,1,1,1,1,0.01,0.99,3,0.7,0.3,0.04)
+#knnum=3
+#pct=0.9
+#testcatdata=catsim(seed=123,dpoints,nsub,4,1,1,1,1,0.01,pct,3,0.7,0.3,0.04)
 
 #catcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc)
 ######################################################################################
@@ -35,9 +37,9 @@
 ######################################################################################
 #plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints)
 #block5
-#plot_cluster(testcluster$scores,testcluster$dbcluster,testcluster$kcluster,0,1,dpoints)
+#plot_cluster(testcluster$scores,testcluster$dbcluster,testcluster$kcluster,0,1,dpoints,knnum,pct)
 ########################################################################################
-#plot_latent=function(zlatent,phat,st,et,cluster,labelnum,argval)
+#plot_latent=function(zlatent,phat,st,et,cluster,labelnum,argval,knnum,pct)
 ######################################################################################
 #block 6
 #plot_latent(testcluster$latentcurve,testcluster$probcurve,0,1,
