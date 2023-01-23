@@ -24,3 +24,5 @@ Imports:
     fossil,
     NbClust,
     ggplot2
+
+Remotes: hadley/testthat
