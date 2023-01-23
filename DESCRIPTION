@@ -13,16 +13,7 @@ Description: This package analyzes the categorical functional data. The catclust
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports:
-    fda,
-    refund,
-    mgcv,
-    funData,
-    MFPCA,
-    dbscan,
-    fossil,
-    NbClust,
-    ggplot2
+
 Depends:
     fda,
     refund,
