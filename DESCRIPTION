@@ -23,3 +23,13 @@ Imports:
     fossil,
     NbClust,
     ggplot2
+Depends:
+    fda,
+    refund,
+    mgcv,
+    funData,
+    MFPCA,
+    dbscan,
+    fossil,
+    NbClust,
+    ggplot2
