@@ -1,11 +1,11 @@
 # catfda
-categorical functional data analysis:
-Package: catfda:
-Type: Package:
-Title: categorical functional data analysis :
-Version: 0.1.0:
-Author: Xiaoxia Champon:
-Maintainer: The package maintainer <xiachampon@gmail.com>:
+categorical functional data analysis
+Package: catfda
+Type: Package
+Title: categorical functional data analysis 
+Version: 0.1.0
+Author: Xiaoxia Champon
+Maintainer: The package maintainer <xiachampon@gmail.com>
 Description: This package analyzes the categorical functional data. The catcluster function takes   	    
     categorical functional data as input and returns and latent curves, probability curves and 
     multivariate functional principal component scores, which are used to cluster the categorical 
