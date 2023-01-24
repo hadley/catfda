@@ -2,7 +2,7 @@
 categorical functional data analysis
 Package: catfda
 Type: Package
-Title: categorical functional data analysis using latent curves
+Title: categorical functional data analysis 
 Version: 0.1.0
 Author: Xiaoxia Champon
 Maintainer: The package maintainer <xiachampon@gmail.com>
