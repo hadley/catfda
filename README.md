@@ -2,33 +2,53 @@
 categorical functional data analysis
 
 Package: catfda
+
 Type: Package
+
 Title: categorical functional data analysis 
+
 Version: 0.1.0
-Author: Xiaoxia Champon
+
+Author: Xiaoxia Champon, Anthony Weishampel, Ana-Maria Staicu
+
 Maintainer: The package maintainer <xiachampon@gmail.com>
-Description: This package analyzes the categorical functional data. The catcluster function takes   	    
+
+Description: This package analyzes the categorical functional data. 
+
+    The catcluster function takes   	    
     categorical functional data as input and returns and latent curves, probability curves and 
-    multivariate functional principal component scores, which are used to cluster the categorical 
-    functional data. See the catfda document for more details.
+    multivariate functional principal component scores, which are used to . See the catfda document for more details.
 
 				
-License: What license is it under?
+License: 
+
 Encoding: UTF-8
+
 LazyData: true
+
 Imports:
+
     fda,
+    
     refund,
+    
     mgcv,
+    
     funData,
+    
     MFPCA,
+    
     dbscan,
+    
     fossil,
+    
     NbClust,
+    
     ggplot2
     
     
     To use the functions in the package:
+    
   1) library(devtools)
      install_github("XiaoxiaChampon/catfda")
   2) library("catfda")
