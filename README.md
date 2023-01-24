@@ -1,5 +1,6 @@
 # catfda
 categorical functional data analysis
+
 Package: catfda
 Type: Package
 Title: categorical functional data analysis 
