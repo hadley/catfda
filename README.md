@@ -13,6 +13,10 @@ Author: Xiaoxia Champon, Anthony Weishampel, Ana-Maria Staicu
 
 Maintainer: The package maintainer <xiachampon@gmail.com>
 
+URL: http://github.com/XiaoxiaChampon/catfda
+
+BugReports: http://github.com/XiaoxiaChampon/catfda/issues
+
 Description: This package analyzes the categorical functional data. 
 
     The catcluster function takes   	    
