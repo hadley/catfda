@@ -23,7 +23,7 @@
 ######################################################################################
 #block 2
 #st=Sys.time()
-#testcluster=catcluster(testcatdata,0,1,25,3,3,0.99,3,5,2)
+#testcluster=catfdcluster(testcatdata,0,1,25,3,3,0.99,3,5,2)
 #et=Sys.time()
 #telapse=et-st
 #telapse
