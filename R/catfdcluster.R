@@ -524,7 +524,7 @@ randfn=function(dbcluster,kcluster,nsub){
 }
 
 ##input categorical functional data n*t and output clustering results, latent curves, probability curves
-catcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
+catfdcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
   datapoints=dim(catfd)[2]
   tolcat=table(catfd)
   catorder=order(tolcat,decreasing = TRUE)
