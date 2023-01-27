@@ -5,17 +5,6 @@
 # Update:
 #####################################################################
 
-#required packages
-library(fda)
-library(refund)
-library(mgcv)
-library(funData)
-library(MFPCA)
-library(dbscan)
-library(fossil)
-library(NbClust)
-library(ggplot2)
-
 #Function to return the logit
 logit <- function(x){
   return(log(x/(1-x)))

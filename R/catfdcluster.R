@@ -6,17 +6,6 @@
 #####################################################################
 
 
-#required packages
-library(fda)
-library(refund)
-library(mgcv)
-library(funData)
-library(MFPCA)
-library(dbscan)
-library(fossil)
-library(NbClust)
-library(ggplot2)
-
 #Function to return the logit
 logit <- function(x){
   return(log(x/(1-x)))
@@ -419,9 +408,9 @@ plot_cluster=function(scores_z,dbcluster,kcluster,st,et,datapoints,knnum,pct){
     geom_text(data=data.frame(round(ninty5p,2)),
               aes(x=dim(distdata)[1]/2,y=1.2*ninty5p,label=paste0("Distance at ",gsub("%$","",row.names(data.frame(round(ninty5p,2)))),"th percentile= ",round(ninty5p,2))))
 
-  
-  
-  
+
+
+
   clusterdata=data.frame(scores_z)
   clusterdata$Cluster=as.factor(dbcluster)
   #clusterdata$Cluster=as.factor(res$cluster)
@@ -571,7 +560,7 @@ catfdcluster=function(catfd,st,et,splines1D,M,knnum,pct,minPts,max.nc,min.nc){
   uFPCA <- MFPCA::MFPCA(mvdata, M = M, uniExpansions = uniexpan)
   scores_z=uFPCA$scores
 
- 
+
   #7, 0.98 2 clusters  6, 88
   res <- dbscan::dbscan(scores_z, eps =pct , minPts = minPts )
 
